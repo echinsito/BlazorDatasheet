@@ -1,6 +1,5 @@
 using BlazorDatasheet.Formula.Core;
-
-namespace BlazorDatashet.Formula.Functions.Math;
+    namespace BlazorDatashet.Formula.Functions.Math;
 
 public class SumFunction : ISheetFunction
 {
@@ -8,11 +7,14 @@ public class SumFunction : ISheetFunction
     {
         return new[]
         {
-            new ParameterDefinition(
-                "number",
-                ParameterType.NumberSequence,
+             new ParameterDefinition("number",
+                ParameterType.Number,
                 ParameterRequirement.Required,
-                isRepeating: true)
+                isRepeating: false),
+            new ParameterDefinition("exponent",
+                ParameterType.Number,
+                ParameterRequirement.Required,
+                isRepeating: false)
         };
     }
 

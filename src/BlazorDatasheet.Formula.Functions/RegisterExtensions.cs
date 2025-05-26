@@ -1,3 +1,5 @@
+using BlazorDatasheet.Core.Formula.Functions;
+using BlazorDatasheet.Core.Formula.Functions.Math;
 using BlazorDatasheet.Formula.Core;
 using BlazorDatasheet.Formula.Functions.Logical;
 using BlazorDatashet.Formula.Functions.Lookup;
@@ -24,6 +26,7 @@ public static class RegisterExtensions
         e.RegisterFunction("SLOPE", new SlopeFunction());
         e.RegisterFunction("POW", new PowerFunction());
         e.RegisterFunction("RAND", new RandFunction());
+        e.RegisterFunction("CUMIPMT", new CumipmtFunction());
     }
 
     public static void RegisterLookupFunctions(this IEnvironment e)
