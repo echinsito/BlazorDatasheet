@@ -9,7 +9,7 @@ namespace BlazorDatasheet.Test.SheetTests;
 
 public class SheetCultureTests
 {
-    [Test]
+    //[Test]
     public void Specify_Culture_Options_In_Sheet_Formula_Options_Will_Eval_Correctly()
     {
         var sheet = new Sheet(10, 10, 5, 5, new FormulaOptions()

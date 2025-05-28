@@ -1,7 +1,5 @@
 ﻿
 using BlazorDatasheet.Formula.Core;
-using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace BlazorDatasheet.Core.Formula.Functions.Math
 {
 
@@ -41,27 +39,33 @@ namespace BlazorDatasheet.Core.Formula.Functions.Math
             try
             {
 
-            
-            var InputAnualRate = args[0].GetValue<double>();
-            int InputLoanYears = args[1].GetValue<int>();
-            double InputLoanAmount = args[2].GetValue<double>();
-            int InputPaymentYears = args[3].GetValue<int>();
 
-            return CellValue.Number(-FCUMIPMT(InputAnualRate, InputLoanYears, InputLoanAmount, InputPaymentYears));
+                var InputAnualRate = args[0].GetValue<double>();
+                int InputLoanYears = args[1].GetValue<int>();
+                double InputLoanAmount = args[2].GetValue<double>();
+                int InputPaymentYears = args[3].GetValue<int>();
+
+                return CellValue.Number(-CumipmtFunctionHelper.FCUMIPMT(InputAnualRate, InputLoanYears, InputLoanAmount, InputPaymentYears));
+            }
+            catch (Exception e)
+            {
+                return CellValue.Error(ErrorType.Null, $"saber que paso {e.Message}");
+            }
+            // Excel convention is to return a negative value for interest paid (an outflow)
         }
-        catch (Exception e)
-        {
-            return CellValue.Error(ErrorType.Null, $"saber que paso {e.Message}");
-        }
-        // Excel convention is to return a negative value for interest paid (an outflow)
-    }
 
         public bool AcceptsErrors => false; // Does not accept error inputs for arguments
         public bool IsVolatile => false; // Not volatile
 
 
 
-        public double FCUMIPMT(double InputAnualRate, int InputLoanYears, double InputLoanAmount, int InputPaymentYears)
+    }
+
+    public static class CumipmtFunctionHelper
+    {
+
+
+        public static double FCUMIPMT(double InputAnualRate, int InputLoanYears, double InputLoanAmount, int InputPaymentYears)
         {
 
 
@@ -125,7 +129,7 @@ namespace BlazorDatasheet.Core.Formula.Functions.Math
         /// <returns>The periodic payment amount (negative as it's an outflow).</returns>
         /// =((A7/100/12)+((A7/100/12)/(POW(1+(A7/100/12),A8*12)-1)))*A6
         /// =((rate/100/12)+((rate/100/12)/(POW(1+(rate/100/12),years*12)-1)))*loan
-        private double FCalculatePMT(double InputAnnualRate, int InputNumberOfPeriods, double InputLoanAmount)
+        public static double FCalculatePMT(double InputAnnualRate, int InputNumberOfPeriods, double InputLoanAmount)
         {
             if (InputAnnualRate == 0)
             {
